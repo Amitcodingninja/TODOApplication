@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo Application</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-card {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 15px;
+        }
+        .todo-item:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card custom-card">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">Todo Application</h2>
+            </div>
+
+            <div class="card-body">
+                <!-- Add Todo Form -->
+                <form action="/addtodo" method="post" class="mb-4">
+                    <div class="input-group shadow-sm">
+                        <input type="text" name="taskContent" 
+                               placeholder="Write your task" 
+                               class="form-control form-control-lg border-0" 
+                               required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-lg px-4">
+                                ADD TODO
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="dropdown-divider my-4"></div>
+
+                <!-- Todo List -->
+                <ul class="list-group list-group-flush">
+                    <li th:each="todo : ${listoftodos}" 
+                        class="list-group-item todo-item d-flex align-items-center py-3">
+                        <form th:action="@{/updatetodo/{id}(id=${todo.id})}" method="post" 
+                              class="d-flex flex-grow-1 align-items-center">
+                            <div class="input-group">
+                                <input type="text" th:value="${todo.taskContent}" name="taskContent" 
+                                       class="form-control border-0 bg-light" 
+                                       style="font-size: 1.1rem" required>
+                                <div class="input-group-append">
+                                    <div class="input-group-text bg-transparent border-0">
+                                        <input type="checkbox" th:checked="${todo.completionStatus == 'Completed'}" 
+                                               name="completionStatus" onchange="this.form.submit()" 
+                                               class="form-check-input mt-0" style="transform: scale(1.3)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ml-2 d-flex">
+                                <button type="submit" class="btn btn-warning btn-sm px-3 mr-2">
+                                    UPDATE
+                                </button>
+                                <a th:href="@{/deleteTODO/{id}(id=${todo.id})}" 
+                                   class="btn btn-danger btn-sm px-3">
+                                    DELETE
+                                </a>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+server:
+  port: 8090  # Change this to any desired port (e.g., 9090)
+
+spring:
+  application:
+    name: TODOApplication
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/todoapplication
+    username: root
+    password: Thakur#123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
